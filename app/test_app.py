@@ -9,22 +9,22 @@ from app import app
 def client():
     """App testing"""
     app.config['TESTING'] = True
-    with app.test_client() as client:
-        yield client
+    with app.test_client() as _client:
+        yield _client
 
 
-def test_home_page(client):
+def test_home_page(_client):
     """Test if home page is loading correctly"""
-    response = client.get('/')
+    response = _client.get('/')
     assert response.status_code == 200
     assert b'TEXT SUMMARIZATION' in response.data  # Check if title is here
 
 
-def test_summarization_success(client):
+def test_summarization_success(_client):
     """Test if summarization task works with a valid input"""
     input_text = "This is a long text that needs to be summarized by the model."  # noqa: E501
-    response = client.post('/text-summarization',
-                           data={"inputtext_": input_text})
+    response = _client.post('/text-summarization',
+                            data={"inputtext_": input_text})
     parsed_response = BeautifulSoup(response.data, 'html.parser')
 
     assert response.status_code == 200
@@ -32,9 +32,9 @@ def test_summarization_success(client):
     assert len(parsed_response.p.get_text()) > 0  # ... that is not empty
 
 
-def test_summarization_empty_input(client):
+def test_summarization_empty_input(_client):
     """Test if error management works when input is empty"""
-    response = client.post('/text-summarization', data={"inputtext_": ""})
+    response = _client.post('/text-summarization', data={"inputtext_": ""})
     parsed_response = BeautifulSoup(response.data, 'html.parser')
 
     assert response.status_code == 200
@@ -42,11 +42,11 @@ def test_summarization_empty_input(client):
             in parsed_response.p.get_text())  # Check what the response
 
 
-def test_summarization_large_input(client):
+def test_summarization_large_input(_client):
     """Test summarization task with a very long input"""
     large_input_text = "This is a very large text. " * 1000
-    response = client.post('/text-summarization',
-                           data={"inputtext_": large_input_text})
+    response = _client.post('/text-summarization',
+                            data={"inputtext_": large_input_text})
     parsed_response = BeautifulSoup(response.data, 'html.parser')
 
     assert response.status_code == 200

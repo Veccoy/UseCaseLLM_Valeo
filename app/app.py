@@ -7,13 +7,13 @@ import torch
 
 app = Flask(__name__)
 
-model_name = "t5-small"
-model_ckpt = "./summarizer"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+MODEL_NAME = "t5-small"
+MODEL_CKPT = "./summarizer"
+TOKENIZER = AutoTokenizer.from_pretrained(MODEL_NAME)
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-model = T5ForConditionalGeneration.from_pretrained(model_ckpt).to(device)
-prefix = "summarize: "
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+MODEL = T5ForConditionalGeneration.from_pretrained(MODEL_CKPT).to(DEVICE)
+PREFIX = "summarize: "
 
 
 @app.route('/')
@@ -36,18 +36,23 @@ def summarize():
                                              "ERROR: No inference made."
                                              "Input text can't be empty!"})
 
-            input_text = prefix + inputtext
+            input_text = PREFIX + inputtext
 
-            tokenized_text = tokenizer.encode(input_text,
+            tokenized_text = TOKENIZER.encode(input_text,
                                               return_tensors='pt',
                                               max_length=512
-                                              ).to(device)
-            summary_ = model.generate(tokenized_text,
+                                              ).to(DEVICE)
+            summary_ = MODEL.generate(tokenized_text,
                                       min_length=10,
                                       max_length=40)
-            summary = tokenizer.decode(summary_[0], skip_special_tokens=True)
+            summary = TOKENIZER.decode(summary_[0], skip_special_tokens=True)
 
             return render_template("output.html", data={"summary": summary})
+        else:
+            return render_template("output.html",
+                                   data={"summary",
+                                         "ERROR:Request of method"
+                                         "other than POST received."})
     except Exception as e:
         return render_template("output.html",
                                data={"summary", f"ERROR: {str(e)}"})
