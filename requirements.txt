@@ -1,0 +1,26 @@
+ctransformers==0.2.27
+cuda-python
+--extra-index-url https://pypi.nvidia.com cudf-cu12
+datasets==2.21.0
+evaluate==0.4.2
+gradio==3.50.2
+huggingface-hub==0.23.5
+keras==3.4.1
+nltk==3.8.1
+numpy==1.26.4
+opencv-contrib-python==4.10.0.84
+opencv-python==4.10.0.84
+opencv-python-headless==4.10.0.84
+peft==0.12.0
+protobuf==3.20.3
+rouge_score==0.1.2
+scipy==1.13.1
+sentencepiece==0.1.99
+tensorflow==2.17.0
+tensorflow-datasets==4.9.6
+tf_keras==2.17.0
+torch==2.4.0
+torchaudio==2.4.0
+torchsummary==1.5.1
+torchvision==0.19.0
+transformers==4.42.4
