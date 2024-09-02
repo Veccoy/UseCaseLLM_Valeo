@@ -3,7 +3,7 @@ cuda-python
 --extra-index-url https://pypi.nvidia.com cudf-cu12
 datasets==2.21.0
 evaluate==0.4.2
-gradio==3.50.2
+flask
 huggingface-hub==0.23.5
 keras==3.4.1
 nltk==3.8.1
