@@ -20,17 +20,23 @@ def home():
 @app.route('/text-summarization', methods=["POST"])
 def summarize():
 
-    if request.method == "POST":
+    try:
+        if request.method == "POST":
 
-        inputtext = request.form["inputtext_"]
+            inputtext = request.form["inputtext_"]
 
-        input_text = prefix + inputtext
+            if not inputtext.strip():
+                    return render_template("output.html", data={"summary": "ERROR: No inference made. Input text can't be empty!"})
 
-        tokenized_text = tokenizer.encode(input_text, return_tensors='pt', max_length=512).to(device)
-        summary_ = model.generate(tokenized_text, min_length=30, max_length=300)
-        summary = tokenizer.decode(summary_[0], skip_special_tokens=True)
+            input_text = prefix + inputtext
 
-    return render_template("output.html", data = {"summary": summary})
+            tokenized_text = tokenizer.encode(input_text, return_tensors='pt', max_length=512).to(device)
+            summary_ = model.generate(tokenized_text, min_length=30, max_length=300)
+            summary = tokenizer.decode(summary_[0], skip_special_tokens=True)
+
+        return render_template("output.html", data={"summary": summary})
+    except Exception as e:
+         return render_template("output.html", data={"summary", f"ERROR: {str(e)}"})
 
 if __name__ == '__main__':
     app.run()
