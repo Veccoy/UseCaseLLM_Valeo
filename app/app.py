@@ -1,3 +1,5 @@
+"""Demo application for LLM summarization task."""
+
 from flask import Flask, render_template, request
 
 from transformers import AutoTokenizer, T5ForConditionalGeneration
@@ -16,12 +18,13 @@ prefix = "summarize: "
 
 @app.route('/')
 def home():
+    """Home page to enter the text to summarize"""
     return render_template('index.html')
 
 
 @app.route('/text-summarization', methods=["POST"])
 def summarize():
-
+    """Sumarization page to see the prediction of the model"""
     try:
         if request.method == "POST":
 
@@ -44,7 +47,7 @@ def summarize():
                                       max_length=40)
             summary = tokenizer.decode(summary_[0], skip_special_tokens=True)
 
-        return render_template("output.html", data={"summary": summary})
+            return render_template("output.html", data={"summary": summary})
     except Exception as e:
         return render_template("output.html",
                                data={"summary", f"ERROR: {str(e)}"})
