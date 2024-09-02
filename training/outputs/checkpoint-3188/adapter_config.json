@@ -20,10 +20,10 @@
   "rank_pattern": {},
   "revision": null,
   "target_modules": [
-    "v",
     "o",
+    "k",
     "q",
-    "k"
+    "v"
   ],
   "task_type": "Seq2Seq",
   "use_dora": false,

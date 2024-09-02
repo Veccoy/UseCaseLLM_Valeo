@@ -20,9 +20,9 @@
   "rank_pattern": {},
   "revision": null,
   "target_modules": [
+    "o",
     "k",
     "q",
-    "o",
     "v"
   ],
   "task_type": "Seq2Seq",
