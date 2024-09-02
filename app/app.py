@@ -48,11 +48,11 @@ def summarize():
             summary = TOKENIZER.decode(summary_[0], skip_special_tokens=True)
 
             return render_template("output.html", data={"summary": summary})
-        else:
-            return render_template("output.html",
-                                   data={"summary",
-                                         "ERROR:Request of method"
-                                         "other than POST received."})
+        
+        return render_template("output.html",
+                               data={"summary",
+                                     "ERROR: Other Request method"
+                                     "than POST received."})
     except Exception as e:
         return render_template("output.html",
                                data={"summary", f"ERROR: {str(e)}"})
