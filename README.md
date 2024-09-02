@@ -74,7 +74,10 @@ In this app, one will be able to prompt a text in a box and get its summary from
 
 The application is not only building a front-end but also manage the back-end and the Hugging Face model handling (loading, tokenizing, generating).
 
-Some unit tests have been written to check the proper operation of the application (proper home page, proper generation, empty input handling).
+Some unit tests have been written to check the proper operation of the application (proper home page, proper generation, empty input handling). To run these tests, in the (`./app/`)(./app/) folder, run the following command:
+```bash
+pytest
+```
 
 ### 6. Containerization
 
@@ -83,6 +86,8 @@ I provide a Dockerfile to encapsulate the entire application (Flask API for text
 Hence, the deployment of the model and the application is automated and all requirements are provided in the container.
 
 ### 7. CI/CD Pipeline with GitHub Actions
+
+The Python files of this repository have been written using Flake8 linting tool on VSCode.
 
 Objective: Develop a CI/CD pipeline using GitHub Actions, focusing on continuous integration
 (CI) rather than continuous deployment (CD).
