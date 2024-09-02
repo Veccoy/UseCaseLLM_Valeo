@@ -89,10 +89,7 @@ Hence, the deployment of the model and the application is automated and all requ
 
 The Python files of this repository have been written using Flake8 linting tool on VSCode.
 
-Objective: Develop a CI/CD pipeline using GitHub Actions, focusing on continuous integration
-(CI) rather than continuous deployment (CD).
-Requirements:
-Pipeline Stages: Implement a multi-stage pipeline that includes:
-● Code Quality Checks: Use tools for linting.
-● Docker Build: Automate the building of the Docker image.
-● API Testing: Include a stage that verifies the API’s functionality by making test calls
+I add some GitHub Actions workflows to focus on continuous integration:
+● For Code Quality Checks: I used the Pylint linting tool ;
+● For Docker Build: I automate the building of the Docker image *(but I have this error: `no space left on device`)* ;
+● For API Testing: I used Python application test workflow.
