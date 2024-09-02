@@ -33,7 +33,7 @@ def summarize():
             if not inputtext.strip():
                 return render_template("output.html",
                                        data={"summary":
-                                             "ERROR: No inference made."
+                                             "ERROR: No inference made. "
                                              "Input text can't be empty!"})
 
             input_text = PREFIX + inputtext
@@ -51,7 +51,7 @@ def summarize():
 
         return render_template("output.html",
                                data={"summary",
-                                     "ERROR: Other Request method"
+                                     "ERROR: Other Request method "
                                      "than POST received."})
     except Exception as e:  # noqa: W0718
         return render_template("output.html",
