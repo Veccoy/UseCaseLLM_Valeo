@@ -7,7 +7,7 @@ The project involves selecting a pre-trained T5 model from Hugging Face, applyin
 
 ## Setup Instructions
 
-To setup the environment to use the fine-tuned T5-small model, please use the Dockerfile provided and follow these steps:
+To setup the environment to use the fine-tuned T5-small model, please use the Dockerfile provided and follow these steps after cloning the repository:
 
 1 - Build the Docker image:
 ```bash
@@ -20,11 +20,25 @@ docker build -t <image_name> -f ./docker/Dockerfile .
 docker run -it --gpus 1 --shm-size=4gb --name test llm_test:latest
 ```
 
-If you do not use Docker, you can find a Python requirement file with all the libraries you need to run the project codes.
+3 - To run the application inside the container use this command line as the `app.py` file should be located in the home folder:
+```bash
+python app.py
+```
+
+If you do not use Docker, you can find a Python requirement file with all the libraries you need to run the project codes. Then, use this command line:
+```bash
+pip install -r requirements.txt
+```
 
 ## User Guide
 
-*Instructions on how to use the repository, including running the fine-tuned model and interacting with the API.*
+Once you launch the application, using the third command line in the previous part, you can access the home page following this link by default: http://127.0.0.1:5000/.
+
+Then, you can submit some text to be summarized by clicking on the textbox and writing the text to be summarized. Then, click on the "Summarize Text" and you will be redirected to another page containing the summarized text. This text will be summarized using the fine-tuned T5-small model obtained in the (training notebook)[./training/training.ipynb].
+
+Once you read the summary, you can return to the home page using the "Go Back" button to submit another text to be summarized.
+
+You can use this application to summarize articles, documents or any other large amount of text. Everything (Hugging Face model handling, input/output, CSS design) is managed by the Flask application.
 
 ### 1. Model Selection
 
@@ -46,7 +60,7 @@ I chose to work on summarization as it is a task we all need from time to time, 
 
 ### 3. Quantization (Bonus, Based on Need)
 
-To quantize the model, we can perform a QLoRA fine-tuning, which combine a LoRA fine-tuning with quantization. However, this technique implies a second GPU run, so this technique has not been selected because of the lack of free GPU.
+To quantize the model, we can perform a QLoRA fine-tuning, which combine a LoRA fine-tuning with quantization. However, this technique implies a second GPU run, so this technique has not been done because of the lack of free GPU. Moreover, it is not necessary with a T5-small model, as it is fast enough to get a response in a reasonable delay.
 
 ### 4. Model Evaluation (Bonus)
 
@@ -56,20 +70,17 @@ To assess the performance of the fine-tuned model compared to the original model
 
 I used Flask to create a demonstration for the summarization task using the fine-tuned T5-small model. It is a Python librairy that allows the user to create web apps easily. It provides a simple and intuitive interface for creating and deploying demos.
 
-In this app, one will be able to prompt a text in a box and get the summary from the fine-tuned T5-small model. It is run using the Python script and accessed from a Web browser.
+In this app, one will be able to prompt a text in a box and get its summary from the fine-tuned T5-small model. It is run using the Python script and accessed from a Web browser.
 
-*Testing: Write tests to validate the API's functionality.*
+The application is not only building a front-end but also manage the back-end and the Hugging Face model handling (loading, tokenizing, generating).
+
+Some unit tests have been written to check the proper operation of the application (proper home page, proper generation, empty input handling).
 
 ### 6. Containerization
 
-I provide a Dockerfile to encapsulate the entire application (Flask API for text summarization) for
-ease of deployment. The created container will contain everything needed to properly run the application.
+I provide a Dockerfile to encapsulate the entire application (Flask API for text summarization) for ease of deployment. The created container will contain everything needed to properly run the application.
 
-Requirements:
-● Dockerfile: Create a Dockerfile that automates the setup of the environment, ensuring
-that all dependencies are installed correctly.
-● Containerization: Build and run the Docker image, verifying that the API functions as
-expected within the container.
+Hence, the deployment of the model and the application is automated and all requirements are provided in the container.
 
 ### 7. CI/CD Pipeline with GitHub Actions
 
