@@ -1,13 +1,30 @@
 # Practical Use Case : Fine-tune a LLM
 
-The objective is to create a comprehensive GitHub repository that showcases my expertise in leveraging Generative AI models, with a particular focus on deploying, optimizing, and fine-tuning Large Language Models (LLMs).
-The project involves selecting a pre-trained model from Hugging Face, applying advanced optimization techniques, retraining the model on a specified dataset, evaluating its performance, and seamlessly integrating the workflow into a CI/CD pipeline.
-
 ## Project Description
 
-*Project Overview: Brief introduction and purpose of the project.*
+The objective is to create a comprehensive GitHub repository that showcases my expertise in leveraging Generative AI models, with a particular focus on deploying, optimizing, and fine-tuning Large Language Models (LLMs).
+The project involves selecting a pre-trained T5 model from Hugging Face, applying advanced optimization techniques, retraining the model on teh XSum dataset, evaluating its performance, and seamlessly integrating the workflow into a CI/CD pipeline. All the choices made have been detailled and explained below.
 
-*Implementation Explanation: Provide in-depth explanations of the choices and approaches taken in steps 1 through 5, detailing your decision-making process and implementation strategy.*
+## Setup Instructions
+
+To setup the environment to use the fine-tuned T5-small model, please use the Dockerfile provided and follow these steps:
+
+1 - Build the Docker image:
+```bash
+cd <path_to_repository>
+docker build -t <image_name> -f ./docker/Dockerfile .
+```
+
+2 - Run a container from the created image with 1 GPU :
+```bash
+docker run -it --gpus 1 --shm-size=4gb --name test llm_test:latest
+```
+
+If you do not use Docker, you can find a Python requirement file with all the libraries you need to run the project codes.
+
+## User Guide
+
+*Instructions on how to use the repository, including running the fine-tuned model and interacting with the API.*
 
 ### 1. Model Selection
 
@@ -37,17 +54,17 @@ To assess the performance of the fine-tuned model compared to the original model
 
 ### 5. API Creation
 
-I used Gradio to create a demo for the summarization task using the fine-tuned T5-small model. It is a Python librairy based on FastAPI that allows the user to create interactive ML apps easily. It provides a simple and intuitive interface for creating and deploying demos, and it supports a wide range of ML frameworks and libraries, including transformers.
+I used Flask to create a demonstration for the summarization task using the fine-tuned T5-small model. It is a Python librairy that allows the user to create web apps easily. It provides a simple and intuitive interface for creating and deploying demos.
 
-In this app, one will be able to prompt a text in a chatbox and get the extreme summary from the fine-tuned T5-small model. It is run using the Python script and accessed from a Web browser.
+In this app, one will be able to prompt a text in a box and get the summary from the fine-tuned T5-small model. It is run using the Python script and accessed from a Web browser.
 
 *Testing: Write tests to validate the API's functionality.*
 
 ### 6. Containerization
 
-I provide a Dockerfile ton encapsulate the 
-Objective: Encapsulate the entire application, including the API, into a Docker container for
-ease of deployment.
+I provide a Dockerfile to encapsulate the entire application (Flask API for text summarization) for
+ease of deployment. The created container will contain everything needed to properly run the application.
+
 Requirements:
 ● Dockerfile: Create a Dockerfile that automates the setup of the environment, ensuring
 that all dependencies are installed correctly.
@@ -55,6 +72,7 @@ that all dependencies are installed correctly.
 expected within the container.
 
 ### 7. CI/CD Pipeline with GitHub Actions
+
 Objective: Develop a CI/CD pipeline using GitHub Actions, focusing on continuous integration
 (CI) rather than continuous deployment (CD).
 Requirements:
@@ -62,11 +80,3 @@ Pipeline Stages: Implement a multi-stage pipeline that includes:
 ● Code Quality Checks: Use tools for linting.
 ● Docker Build: Automate the building of the Docker image.
 ● API Testing: Include a stage that verifies the API’s functionality by making test calls
-
-## Setup Instructions
-
-*Detailed steps for setting up the project locally, including environment setup.*
-
-## User Guide
-
-*Instructions on how to use the repository, including running the fine-tuned model and interacting with the API.*
