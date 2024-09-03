@@ -1,5 +1,5 @@
 """Test script for Flask application."""
-# pylint: disable=C0114
+# pylint: disable=redefined-outer-name
 
 import pytest
 from bs4 import BeautifulSoup
