@@ -1,1 +1,2 @@
 training/outputs/runs/
+training/outputs/*.pt
