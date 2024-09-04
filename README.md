@@ -98,6 +98,6 @@ The Python files of this repository have been written using Flake8 linting tool 
 
 I add some GitHub Actions workflows to focus on continuous integration:
 
-* For Code Quality Checks: I used the Pylint linting tool (disabling *redefined-outer-name* in `test_app.py` because of pytest functionnality and ignoring *broad-exception-caught* for `app.py`) ;
+* For Code Quality Checks: I used the Pylint linting tool (disabling *redefined-outer-name* in `test_app.py` because of pytest functionnality and ignoring *broad-exception-caught* for `app.py` as the exception is displayed in the API) ;
 * For Docker Build: I automate the building of the Docker image *(but I have this error: `no space left on device`)* ;
 * For API Testing: I used Python application test workflow.
