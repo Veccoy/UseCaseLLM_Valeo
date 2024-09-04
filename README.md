@@ -12,12 +12,12 @@ To setup the environment to use the fine-tuned T5-small model, please use the Do
 1 - Build the Docker image:
 ```bash
 cd <path_to_repository>
-docker build -t <image_name> -f ./docker/Dockerfile .
+docker build -t <image_name>:<tag> -f ./docker/Dockerfile .
 ```
 
 2 - Run a container from the created image with 1 GPU :
 ```bash
-docker run -it --gpus 1 --shm-size=4gb --name test llm_test:latest
+docker run -it --gpus 1 --shm-size=4gb --name <container_name> <image_name>:<tag>
 ```
 
 3 - To run the application inside the container use this command line as the `app.py` file should be located in the home folder:
@@ -32,7 +32,7 @@ pip install -r requirements.txt
 
 ## User Guide
 
-Once you launch the application, using the third command line in the previous part, you can access the home page following this link by default: http://127.0.0.1:5000/.
+Once you launch the application, using the third command line of the previous part, you can access the home page following this link by default: http://127.0.0.1:5000/.
 
 Then, you can submit some text to be summarized by clicking on the textbox and writing the text to be summarized. Then, click on the "Summarize Text" and you will be redirected to another page containing the summarized text. This text will be summarized using the fine-tuned T5-small model obtained in the (training notebook)[./training/training.ipynb].
 
@@ -60,7 +60,14 @@ I chose to work on summarization as it is a task we all need from time to time, 
 
 ### 3. Quantization (Bonus, Based on Need)
 
-To quantize the model, we can perform a QLoRA fine-tuning, which combine a LoRA fine-tuning with quantization. However, this technique implies a second GPU run, so this technique has not been done because of the lack of free GPU. Moreover, it is not necessary with a T5-small model, as it is fast enough to get a response in a reasonable delay.
+To quantize the model, several methods exist such as:
+
+* Dynamic quantization (for weights only)
+* Static quantization (using observers)
+* Quantization-aware training (tuning model and quantization parameters for some epochs)
+* Other mixing methods such as QLoRA (static quantization + LoRA fine-tuning)
+
+Here, as we already have a LoRA configuration, we could perform a QLoRA fine-tuning, which combine a LoRA fine-tuning with quantization. However, this technique implies a second GPU run, so this technique has not been done because of the lack of free GPU. Moreover, an inference speed increase is not necessary with a T5-small model, as it is fast enough to get a response in a reasonable delay.
 
 ### 4. Model Evaluation (Bonus)
 
@@ -90,6 +97,7 @@ Hence, the deployment of the model and the application is automated and all requ
 The Python files of this repository have been written using Flake8 linting tool on VSCode.
 
 I add some GitHub Actions workflows to focus on continuous integration:
-● For Code Quality Checks: I used the Pylint linting tool ;
-● For Docker Build: I automate the building of the Docker image *(but I have this error: `no space left on device`)* ;
-● For API Testing: I used Python application test workflow.
+
+* For Code Quality Checks: I used the Pylint linting tool (disabling *redefined-outer-name* in `test_app.py` because of pytest functionnality and ignoring *broad-exception-caught* for `app.py`) ;
+* For Docker Build: I automate the building of the Docker image *(but I have this error: `no space left on device`)* ;
+* For API Testing: I used Python application test workflow.
