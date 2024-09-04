@@ -53,7 +53,7 @@ def summarize():
                                data={"summary",
                                      "ERROR: Other Request method "
                                      "than POST received."})
-    except Exception as e:  # noqa: W0718
+    except Exception as e:  # pylint: disable=broad-exception-caught
         return render_template("output.html",
                                data={"summary", f"ERROR: {str(e)}"})
 
